@@ -14,6 +14,7 @@ namespace CompanyRegister.Services
 		public CompanyDto GetById(int id);
 		public int Create(CreateCompanyDto dto);
 		public void Delete(int id);
+		public void Update(int id, UpdateCompanyDto dto);
 	}
 	public class CompanyService : ICompanyService
 	{
