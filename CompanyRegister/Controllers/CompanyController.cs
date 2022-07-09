@@ -22,5 +22,21 @@ namespace CompanyRegister.Controllers
 			var restaurantsDtos = _companyService.GetAll();
 			return Ok(restaurantsDtos);
 		}
+
+		[HttpGet("{id}")]
+		public ActionResult<IEnumerable<CompanyDto>> Get([FromRoute] int id)
+		{
+			var restaurant = _companyService.GetById(id);
+
+			return Ok(restaurant);
+		}
+
+		[HttpPost]
+		public ActionResult CreateCompany([FromBody] CreateCompanyDto dto)
+		{
+			var id = _companyService.Create(dto);
+
+			return Created($"/api/restaurant/{id}", null);
+		}
 	}
 }
