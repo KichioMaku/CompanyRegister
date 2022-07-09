@@ -1,4 +1,6 @@
-﻿namespace CompanyRegister.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace CompanyRegister.Entities
 {
 	public class Person
 	{

@@ -17,18 +17,18 @@ namespace CompanyRegister.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<IEnumerable<CompanyDto>> GetAll([FromQuery] string searchPhrase)
+		public ActionResult<IEnumerable<CompanyDto>> GetAll()
 		{
-			var restaurantsDtos = _companyService.GetAll();
-			return Ok(restaurantsDtos);
+			var companiesDtos = _companyService.GetAll();
+			return Ok(companiesDtos);
 		}
 
 		[HttpGet("{id}")]
 		public ActionResult<IEnumerable<CompanyDto>> Get([FromRoute] int id)
 		{
-			var restaurant = _companyService.GetById(id);
+			var company = _companyService.GetById(id);
 
-			return Ok(restaurant);
+			return Ok(company);
 		}
 
 		[HttpPost]
