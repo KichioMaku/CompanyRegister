@@ -1,4 +1,5 @@
-﻿using CompanyRegister.Services;
+﻿using CompanyRegister.Models;
+using CompanyRegister.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
