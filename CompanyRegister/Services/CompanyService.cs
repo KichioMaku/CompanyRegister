@@ -13,6 +13,8 @@ namespace CompanyRegister.Services
 		IEnumerable<CompanyDto> GetAll();
 		public CompanyDto GetById(int id);
 		public int Create(CreateCompanyDto dto);
+		public void Delete(int id);
+		public void Update(int id, UpdateCompanyDto dto);
 	}
 	public class CompanyService : ICompanyService
 	{
@@ -41,7 +43,6 @@ namespace CompanyRegister.Services
 
 			if (company is null)
 			{
-				
 				throw new NotFoundException($"Restaurant with id = {id} not found.");
 			}
 			var result = _mapper.Map<CompanyDto>(company);
@@ -54,6 +55,31 @@ namespace CompanyRegister.Services
 			_dbContext.Add(company);
 			_dbContext.SaveChanges();
 			return company.Id;
+		}
+		public void Delete(int id)
+		{
+			var company = _dbContext
+				.Companies
+				.FirstOrDefault(x => x.Id == id);
+			if (company is null)
+				throw new NotFoundException("Restaurant not found");
+
+			_dbContext.Companies.Remove(company);
+			_dbContext.SaveChanges();
+		}
+		public void Update(int id, UpdateCompanyDto dto)
+		{
+			var company = _dbContext
+				.Companies
+				.FirstOrDefault(x => x.Id == id);
+			if (company is null)
+				throw new NotFoundException("Company not found");
+
+			company.Name = dto.Name;
+			company.Description = dto.Description;
+			company.ContactEmail = dto.ContactEmail;
+		
+			_dbContext.SaveChanges();
 		}
 	}
 }

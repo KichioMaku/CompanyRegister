@@ -20,6 +20,8 @@ namespace CompanyRegister
 					Street = dto.Street,
 					PostalCode = dto.PostalCode
 				}));
+
+			CreateMap<UpdateCompanyDto, Company>();
 		}
 	}
 }
