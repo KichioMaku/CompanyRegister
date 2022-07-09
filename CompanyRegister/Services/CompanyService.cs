@@ -46,5 +46,13 @@ namespace CompanyRegister.Services
 			var result = _mapper.Map<CompanyDto>(company);
 			return result;
 		}
+
+		public int Create(CreateCompanyDto dto)
+		{
+			var company = _mapper.Map<Company>(dto);
+			_dbContext.Add(company);
+			_dbContext.SaveChanges();
+			return company.Id;
+		}
 	}
 }
