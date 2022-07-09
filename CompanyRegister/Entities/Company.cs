@@ -1,4 +1,6 @@
-﻿namespace CompanyRegister.Entities
+﻿using System.Collections.Generic;
+
+namespace CompanyRegister.Entities
 {
 	public class Company
 	{
@@ -11,7 +13,7 @@
         public string ContactEmail { get; set; }
         public string ContactNumber { get; set; }
         public int AddressId { get; set; }
-        //public virtual Address Address { get; set; }
-        //public virtual List<Person> Persons { get; set; }
-    }
+		public virtual Address Address { get; set; }
+		public virtual List<Person> Persons { get; set; }
+	}
 }
