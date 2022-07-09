@@ -34,6 +34,7 @@ namespace CompanyRegister
 			services.AddScoped<CompanySeeder>();
 			services.AddAutoMapper(this.GetType().Assembly);
 			services.AddDbContext<CompanyDbContext>();
+			services.AddScoped<IPersonService, PersonService>();
 			services.AddScoped<ICompanyService, CompanyService>();
 			services.AddSwaggerGen();
 		}
