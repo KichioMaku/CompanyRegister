@@ -30,5 +30,13 @@ namespace CompanyRegister.Controllers
 
 			return Ok(restaurant);
 		}
+
+		[HttpPost]
+		public ActionResult CreateCompany([FromBody] CreateCompanyDto dto)
+		{
+			var id = _companyService.Create(dto);
+
+			return Created($"/api/restaurant/{id}", null);
+		}
 	}
 }
