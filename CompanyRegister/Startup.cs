@@ -1,4 +1,5 @@
 using CompanyRegister.Entities;
+using CompanyRegister.Seeder;
 using CompanyRegister.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
