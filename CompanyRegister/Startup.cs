@@ -35,6 +35,7 @@ namespace CompanyRegister
 			services.AddAutoMapper(this.GetType().Assembly);
 			services.AddDbContext<CompanyDbContext>();
 			services.AddScoped<ICompanyService, CompanyService>();
+			services.AddSwaggerGen();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +49,10 @@ namespace CompanyRegister
 			}
 
 			app.UseHttpsRedirection();
+
+			app.UseSwagger();
+
+			app.UseSwaggerUI();
 
 			app.UseRouting();
 
