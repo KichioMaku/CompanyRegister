@@ -28,7 +28,11 @@ namespace CompanyRegister.Services
 		}
 		public IEnumerable<CompanyDto> GetAll()
 		{
-			var companies = _dbContext.Companies.Include(x => x.Address).Include(x=>x.Persons).ToList();
+			var companies = _dbContext
+				.Companies
+				.Include(x => x.Address)
+				.Include(x => x.Persons)
+				.ToList();
 			var companiesDtos = _mapper.Map<List<CompanyDto>>(companies);
 			return companiesDtos;
 		}
