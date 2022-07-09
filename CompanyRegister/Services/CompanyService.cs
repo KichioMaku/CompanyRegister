@@ -12,6 +12,7 @@ namespace CompanyRegister.Services
 	{
 		IEnumerable<CompanyDto> GetAll();
 		public CompanyDto GetById(int id);
+		public int Create(CreateCompanyDto dto);
 	}
 	public class CompanyService : ICompanyService
 	{
