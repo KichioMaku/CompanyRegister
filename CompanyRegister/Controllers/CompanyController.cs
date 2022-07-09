@@ -38,5 +38,12 @@ namespace CompanyRegister.Controllers
 
 			return Created($"/api/restaurant/{id}", null);
 		}
+
+		[HttpDelete("{id}")]
+		public ActionResult Delete([FromRoute] int id)
+		{
+			_companyService.Delete(id);
+			return NoContent();
+		}
 	}
 }
