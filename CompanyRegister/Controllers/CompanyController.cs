@@ -45,5 +45,12 @@ namespace CompanyRegister.Controllers
 			_companyService.Delete(id);
 			return NoContent();
 		}
+
+		[HttpPut("{id}")]
+		public ActionResult Update([FromBody] UpdateCompanyDto dto, [FromRoute] int id)
+		{
+			_companyService.Update(id, dto);
+			return Ok();
+		}
 	}
 }

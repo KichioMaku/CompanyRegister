@@ -66,5 +66,19 @@ namespace CompanyRegister.Services
 			_dbContext.Companies.Remove(company);
 			_dbContext.SaveChanges();
 		}
+		public void Update(int id, UpdateCompanyDto dto)
+		{
+			var company = _dbContext
+				.Companies
+				.FirstOrDefault(x => x.Id == id);
+			if (company is null)
+				throw new NotFoundException("Company not found");
+
+			company.Name = dto.Name;
+			company.Description = dto.Description;
+			company.ContactEmail = dto.ContactEmail;
+		
+			_dbContext.SaveChanges();
+		}
 	}
 }
