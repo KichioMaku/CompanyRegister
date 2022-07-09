@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 
 namespace CompanyRegister.Entities
 {
 	public class CompanyDbContext : DbContext
 	{
+		private string _connectionString = "Server=(localdb)\\mssqllocaldb;Database=CompanyDB;Trusted_Connection=True";
+
 		public DbSet<Company> Companies { get; set; }
 		public DbSet<Person> Persons { get; set; }
 		public DbSet<Address> Address { get; set; }
@@ -39,5 +43,10 @@ namespace CompanyRegister.Entities
                 .IsRequired()
                 .HasMaxLength(50); 
         }
-	}
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_connectionString);
+        }
+    }
 }
