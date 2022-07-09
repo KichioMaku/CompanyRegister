@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CompanyRegister.Entities;
+using CompanyRegister.Exceptions;
 using CompanyRegister.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace CompanyRegister.Services
 	public interface ICompanyService
 	{
 		IEnumerable<CompanyDto> GetAll();
+		public CompanyDto GetById(int id);
 	}
 	public class CompanyService : ICompanyService
 	{
@@ -39,7 +41,7 @@ namespace CompanyRegister.Services
 			if (company is null)
 			{
 				
-				//throw new NotFoundException($"Restaurant with id = {id} not found.");
+				throw new NotFoundException($"Restaurant with id = {id} not found.");
 			}
 			var result = _mapper.Map<CompanyDto>(company);
 			return result;
