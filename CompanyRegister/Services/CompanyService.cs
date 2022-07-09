@@ -27,5 +27,22 @@ namespace CompanyRegister.Services
 			var companiesDtos = _mapper.Map<List<CompanyDto>>(companies);
 			return companiesDtos;
 		}
+
+		public CompanyDto GetById(int id)
+		{
+			var company = _dbContext
+				.Companies
+				.Include(r => r.Address)
+				.Include(r => r.Persons)
+				.FirstOrDefault(x => x.Id == id);
+
+			if (company is null)
+			{
+				
+				//throw new NotFoundException($"Restaurant with id = {id} not found.");
+			}
+			var result = _mapper.Map<CompanyDto>(company);
+			return result;
+		}
 	}
 }
