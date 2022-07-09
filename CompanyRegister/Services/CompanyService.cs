@@ -1,4 +1,5 @@
-﻿using CompanyRegister.Entities;
+﻿using AutoMapper;
+using CompanyRegister.Entities;
 using CompanyRegister.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -13,15 +14,18 @@ namespace CompanyRegister.Services
 	public class CompanyService : ICompanyService
 	{
 		private readonly CompanyDbContext _dbContext;
+		private readonly IMapper _mapper;
 
-		public CompanyService(CompanyDbContext dbContext)
+		public CompanyService(CompanyDbContext dbContext, IMapper mapper)
 		{
 			_dbContext = dbContext;
+			_mapper = mapper;
 		}
 		public IEnumerable<CompanyDto> GetAll()
 		{
 			var companies = _dbContext.Companies.Include(x => x.Address).Include(x=>x.Persons).ToList();
-
+			var companiesDtos = _mapper.Map<List<CompanyDto>>(companies);
+			return companiesDtos;
 		}
 	}
 }
