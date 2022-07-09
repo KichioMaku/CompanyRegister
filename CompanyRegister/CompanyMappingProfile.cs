@@ -20,9 +20,6 @@ namespace CompanyRegister
 					Street = dto.Street,
 					PostalCode = dto.PostalCode
 				}));
-
 		}
-
-
 	}
 }
