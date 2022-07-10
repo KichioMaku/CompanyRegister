@@ -36,6 +36,7 @@ namespace CompanyRegister
 			services.AddDbContext<CompanyDbContext>();
 			services.AddScoped<IPersonService, PersonService>();
 			services.AddScoped<ICompanyService, CompanyService>();
+			services.AddScoped<IAccountService, AccountService>();
 			services.AddSwaggerGen();
 		}
 
