@@ -4,6 +4,7 @@ using CompanyRegister.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +39,7 @@ namespace CompanyRegister
 			services.AddScoped<ICompanyService, CompanyService>();
 			services.AddScoped<IAccountService, AccountService>();
 			services.AddSwaggerGen();
+			services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
