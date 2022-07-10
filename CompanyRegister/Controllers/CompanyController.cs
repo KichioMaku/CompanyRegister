@@ -42,7 +42,7 @@ namespace CompanyRegister.Controllers
 			var userId = int.Parse(User.FindFirst(c => c.Type ==
 			ClaimTypes.NameIdentifier).Value);
 
-			var id = _companyService.Create(dto, userId);
+			var id = _companyService.Create(dto);
 
 			return Created($"/api/restaurant/{id}", null);
 		}
@@ -50,14 +50,14 @@ namespace CompanyRegister.Controllers
 		[HttpDelete("{id}")]
 		public ActionResult Delete([FromRoute] int id)
 		{
-			_companyService.Delete(id, User);
+			_companyService.Delete(id);
 			return NoContent();
 		}
 
 		[HttpPut("{id}")]
 		public ActionResult Update([FromBody] UpdateCompanyDto dto, [FromRoute] int id)
 		{
-			_companyService.Update(id, dto, User);
+			_companyService.Update(id, dto);
 			return Ok();
 		}
 

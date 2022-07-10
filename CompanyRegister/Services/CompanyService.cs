@@ -16,9 +16,9 @@ namespace CompanyRegister.Services
 	{
 		IEnumerable<CompanyDto> GetAll();
 		public CompanyDto GetById(int id);
-		public int Create(CreateCompanyDto dto, int userId);
-		public void Delete(int id, ClaimsPrincipal user);
-		public void Update(int id, UpdateCompanyDto dto, ClaimsPrincipal user);
+		public int Create(CreateCompanyDto dto);
+		public void Delete(int id);
+		public void Update(int id, UpdateCompanyDto dto);
 	}
 	public class CompanyService : ICompanyService
 	{
@@ -26,13 +26,15 @@ namespace CompanyRegister.Services
 		private readonly IMapper _mapper;
 		private readonly ILogger<CompanyService> _logger;
 		private readonly IAuthorizationService _authorizationService;
+		private readonly IUserContextService _userContextService;
 
-		public CompanyService(CompanyDbContext dbContext, ILogger<CompanyService> logger, IMapper mapper, IAuthorizationService authorizationService)
+		public CompanyService(CompanyDbContext dbContext, ILogger<CompanyService> logger, IMapper mapper, IAuthorizationService authorizationService, IUserContextService userContextService)
 		{
 			_dbContext = dbContext;
 			_mapper = mapper;
 			_logger = logger;
 			_authorizationService = authorizationService;
+			_userContextService = userContextService;
 		}
 		public IEnumerable<CompanyDto> GetAll()
 		{
@@ -61,15 +63,15 @@ namespace CompanyRegister.Services
 			return result;
 		}
 
-		public int Create(CreateCompanyDto dto, int userId)
+		public int Create(CreateCompanyDto dto)
 		{
 			var company = _mapper.Map<Company>(dto);
-			company.CreatedById = userId;
+			company.CreatedById = _userContextService.GetUserId;
 			_dbContext.Add(company);
 			_dbContext.SaveChanges();
 			return company.Id;
 		}
-		public void Delete(int id, ClaimsPrincipal user)
+		public void Delete(int id)
 		{
 			_logger.LogWarning($"Company with id: {id} DELETE action invoked");
 			var company = _dbContext
@@ -78,7 +80,7 @@ namespace CompanyRegister.Services
 			if (company is null)
 				throw new NotFoundException("Company not found");
 
-			var authorizationResult = _authorizationService.AuthorizeAsync(user, company, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
+			var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, company, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
 
 			if (!authorizationResult.Succeeded)
 			{
@@ -88,7 +90,7 @@ namespace CompanyRegister.Services
 			_dbContext.Companies.Remove(company);
 			_dbContext.SaveChanges();
 		}
-		public void Update(int id, UpdateCompanyDto dto, ClaimsPrincipal user)
+		public void Update(int id, UpdateCompanyDto dto)
 		{
 			var company = _dbContext
 				.Companies
@@ -96,7 +98,7 @@ namespace CompanyRegister.Services
 			if (company is null)
 				throw new NotFoundException("Company not found");
 
-			var authorizationResult = _authorizationService.AuthorizeAsync(user, company, new 
+			var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, company, new 
 				ResourceOperationRequirement(ResourceOperation.Update)).Result;
 
 			if (!authorizationResult.Succeeded)
