@@ -6,11 +6,11 @@ namespace CompanyRegister.Controllers
 	[ApiController]
 	public class AccountController : ControllerBase
 	{
-		//[HttpPost("register")]
-		//public ActionResult RegisterUser([FromBody] RegisterUserDto dto)
-		//{
+		[HttpPost("register")]
+		public ActionResult RegisterUser([FromBody] RegisterUserDto dto)
+		{
 
-		//}
+		}
 
 	}
 }
