@@ -21,9 +21,9 @@ namespace CompanyRegister.Controllers
 		[HttpGet]
 		[Authorize(Policy = "HasNationality")]
 		[Authorize(Policy = "Atleast20")]
-		public ActionResult<IEnumerable<CompanyDto>> GetAll()
+		public ActionResult<IEnumerable<CompanyDto>> GetAll([FromQuery]string searchPhrase)
 		{
-			var companiesDtos = _companyService.GetAll();
+			var companiesDtos = _companyService.GetAll(searchPhrase);
 			return Ok(companiesDtos);
 		}
 
