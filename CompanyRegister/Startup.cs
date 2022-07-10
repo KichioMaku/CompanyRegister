@@ -1,3 +1,4 @@
+using CompanyRegister.Authorization;
 using CompanyRegister.Entities;
 using CompanyRegister.MIddleware;
 using CompanyRegister.Models;
@@ -6,6 +7,7 @@ using CompanyRegister.Seeder;
 using CompanyRegister.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -62,8 +64,10 @@ namespace CompanyRegister
 			services.AddAuthorization(options =>
 			{
 				options.AddPolicy("hasNationality", builder => builder.RequireClaim("Nationality"));
+				options.AddPolicy("Atleast20", builder => builder.AddRequirements(new MinimumAgeRequirement(20)));
 			});
 
+			services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
 			services.AddControllers().AddFluentValidation();
 			services.AddControllers();
 			services.AddScoped<CompanySeeder>();
