@@ -24,6 +24,8 @@ namespace CompanyRegister
 				}));
 
 			CreateMap<UpdateCompanyDto, Company>();
+			CreateMap<CreatePersonDto, Person>();
+
 		}
 	}
 }
