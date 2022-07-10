@@ -18,6 +18,13 @@ namespace CompanyRegister.Seeder
 		{
 			if (_dbContext.Database.CanConnect())
 			{
+				if (!_dbContext.Roles.Any())
+				{
+					var roles = GetRoles();
+					_dbContext.Roles.AddRange(roles);
+					_dbContext.SaveChanges();
+				}
+
 				if (!_dbContext.Companies.Any())
 				{
 					var companies = GetCompanies();
@@ -27,7 +34,28 @@ namespace CompanyRegister.Seeder
 			}
 		}
 
-		private IEnumerable<Company> GetCompanies()
+
+		private IEnumerable<Role> GetRoles()
+		{
+			var roles = new List<Role>()
+			{
+				new Role()
+				{
+					Name = "User"
+				},
+				new Role()
+				{
+					Name = "Manager"
+				},
+				new Role()
+				{
+					Name = "Admin"
+				}
+			};
+			return roles;
+		}
+
+			private IEnumerable<Company> GetCompanies()
 		{
 			var companies = new List<Company>()
 			{
