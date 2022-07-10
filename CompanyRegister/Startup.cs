@@ -38,6 +38,8 @@ namespace CompanyRegister
 		{
 			var authenticationSettings = new AuthenticationSettings();
 
+			services.AddSingleton(authenticationSettings);
+
 			Configuration.GetSection("Authentication").Bind(authenticationSettings);
 
 			services.AddAuthentication(option =>

@@ -13,6 +13,11 @@ namespace CompanyRegister.MIddleware
             {
                 await next.Invoke(context);
             }
+            catch (BadHttpRequestException ex)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(ex.Message);
+            }
 
             catch (NotFoundException e)
             {
