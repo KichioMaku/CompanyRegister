@@ -14,6 +14,7 @@ namespace CompanyRegister.Controllers
 		{
 			_accountService = accountService;
 		}
+
 		[HttpPost("register")]
 		public ActionResult RegisterUser([FromBody] RegisterUserDto dto)
 		{
