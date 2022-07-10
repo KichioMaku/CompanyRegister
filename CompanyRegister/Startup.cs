@@ -68,6 +68,7 @@ namespace CompanyRegister
 			});
 
 			services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
+			services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandler>();
 			services.AddControllers().AddFluentValidation();
 			services.AddControllers();
 			services.AddScoped<CompanySeeder>();
