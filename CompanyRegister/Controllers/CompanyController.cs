@@ -1,5 +1,6 @@
 ﻿using CompanyRegister.Models;
 using CompanyRegister.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -17,6 +18,7 @@ namespace CompanyRegister.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Policy = "HasNationality")]
 		public ActionResult<IEnumerable<CompanyDto>> GetAll()
 		{
 			var companiesDtos = _companyService.GetAll();
@@ -32,6 +34,7 @@ namespace CompanyRegister.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin,Manager")]
 		public ActionResult CreateCompany([FromBody] CreateCompanyDto dto)
 		{
 			var id = _companyService.Create(dto);
@@ -52,5 +55,6 @@ namespace CompanyRegister.Controllers
 			_companyService.Update(id, dto);
 			return Ok();
 		}
+
 	}
 }

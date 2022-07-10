@@ -1,4 +1,5 @@
 using CompanyRegister.Entities;
+using CompanyRegister.MIddleware;
 using CompanyRegister.Models;
 using CompanyRegister.Models.Validators;
 using CompanyRegister.Seeder;
@@ -58,6 +59,10 @@ namespace CompanyRegister
 					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
 				};
 			});
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("hasNationality", builder => builder.RequireClaim("Nationality"));
+			});
 
 			services.AddControllers().AddFluentValidation();
 			services.AddControllers();
@@ -67,6 +72,7 @@ namespace CompanyRegister
 			services.AddScoped<IPersonService, PersonService>();
 			services.AddScoped<ICompanyService, CompanyService>();
 			services.AddScoped<IAccountService, AccountService>();
+			services.AddScoped<ErrorHandlingMiddleware>();
 			services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 			services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 			services.AddSwaggerGen();
@@ -83,6 +89,8 @@ namespace CompanyRegister
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			app.UseMiddleware<ErrorHandlingMiddleware>();
 
 			app.UseAuthentication();
 
