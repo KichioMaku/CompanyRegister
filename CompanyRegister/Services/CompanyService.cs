@@ -14,7 +14,7 @@ namespace CompanyRegister.Services
 {
 	public interface ICompanyService
 	{
-		IEnumerable<CompanyDto> GetAll();
+		IEnumerable<CompanyDto> GetAll(string searchPhrase);
 		public CompanyDto GetById(int id);
 		public int Create(CreateCompanyDto dto);
 		public void Delete(int id);
@@ -36,14 +36,16 @@ namespace CompanyRegister.Services
 			_authorizationService = authorizationService;
 			_userContextService = userContextService;
 		}
-		public IEnumerable<CompanyDto> GetAll()
+		public IEnumerable<CompanyDto> GetAll(string searchPhrase)
 		{
 			var companies = _dbContext
 				.Companies
 				.Include(x => x.Address)
 				.Include(x => x.Persons)
+				.Where(r => searchPhrase == null || (r.Name.ToLower().Contains(searchPhrase.ToLower()) || r.Description.ToLower().Contains(searchPhrase.ToLower())))
 				.ToList();
 			var companiesDtos = _mapper.Map<List<CompanyDto>>(companies);
+
 			return companiesDtos;
 		}
 
